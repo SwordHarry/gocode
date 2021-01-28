@@ -20,6 +20,8 @@ package main
 ]
 */
 
+import "container/list"
+
 /**
  * Definition for a binary tree node.
  */
@@ -29,7 +31,8 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-// 最好自定义封装一个 双向队列，go 语言没有内置队列
+/**
+// 自定义封装的双向队列
 type twoWayQueue struct {
 	q []*TreeNode
 }
@@ -58,16 +61,17 @@ func (t *twoWayQueue) NegativePush(node *TreeNode) {
 func (t *twoWayQueue) Len() int {
 	return len(t.q)
 }
+*/
 
+// go 有内置队列 container/list，也可以自己封装一个 双向队列
 func zigzagLevelOrder(root *TreeNode) [][]int {
-
+	queue := list.New()
 	var result [][]int
 	if root == nil {
 		return result
 	}
-	queue := &twoWayQueue{q: []*TreeNode{}}
 	node := root
-	queue.PositivePush(node)
+	queue.PushBack(node)
 	flag := true
 	for queue.Len() > 0 {
 		le := queue.Len()
@@ -75,21 +79,25 @@ func zigzagLevelOrder(root *TreeNode) [][]int {
 		for i := 0; i < le; i++ {
 			if flag {
 				// left pop
-				node = queue.PositivePop()
+				e := queue.Front()
+				node = e.Value.(*TreeNode)
+				queue.Remove(e)
 				if node.Left != nil {
-					queue.PositivePush(node.Left)
+					queue.PushBack(node.Left)
 				}
 				if node.Right != nil {
-					queue.PositivePush(node.Right)
+					queue.PushBack(node.Right)
 				}
 			} else {
 				// right pop
-				node = queue.NegativePop()
+				e := queue.Back()
+				node = e.Value.(*TreeNode)
+				queue.Remove(e)
 				if node.Right != nil {
-					queue.NegativePush(node.Right)
+					queue.PushFront(node.Right)
 				}
 				if node.Left != nil {
-					queue.NegativePush(node.Left)
+					queue.PushFront(node.Left)
 				}
 			}
 			temp = append(temp, node.Val)
