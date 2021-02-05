@@ -69,7 +69,7 @@ func findKthLargest2(nums []int, k int) int {
 		}
 	}
 	bigLen := len(big)
-	if bigLen >= k {
+	if bigLen > k-1 {
 		return findKthLargest2(big, k)
 	} else if bigLen == k-1 {
 		return mid
