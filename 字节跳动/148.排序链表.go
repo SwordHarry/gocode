@@ -28,6 +28,8 @@ package main
  *     Next *ListNode
  * }
  */
+
+// 思路：归并排序，分链表，然后进行合并
 func sortList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head

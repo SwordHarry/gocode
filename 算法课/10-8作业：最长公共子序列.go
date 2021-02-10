@@ -33,7 +33,6 @@ func LongestSubsequence(x, y string) string {
 		for j := 1; j <= m; j++ {
 			if x[i-1] == y[j-1] {
 				c[i][j] = c[i-1][j-1] + 1
-				print(x[i])
 			} else {
 				c[i][j] = max(c[i-1][j], c[i][j-1])
 			}
