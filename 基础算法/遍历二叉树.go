@@ -19,8 +19,7 @@ func preorderTraver(root *TreeNode) []int {
 
 	node := root
 	stack := list.New()
-	stack.PushBack(node)
-	for stack.Len() > 0 {
+	for node != nil || stack.Len() > 0 {
 		for node != nil {
 			result = append(result, node.Val)
 			stack.PushBack(node)
