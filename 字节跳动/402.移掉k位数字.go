@@ -45,9 +45,6 @@ func removeKdigits(num string, k int) string {
 		s = append(s, num[i])
 	}
 
-	for ; k > 0; k-- {
-		s = s[:len(s)-1]
-	}
 	// 注意 0200 的情况
 	for len(s) > 0 && s[0] == '0' {
 		s = s[1:]
