@@ -11,6 +11,7 @@ num1 和num2 都不包含任何前导零
 你不能使用任何內建 BigInteger 库，也不能直接将输入的字符串转换为整数形式
 */
 
+// 思路：直接每个数字按位做加法，必要的话可以用一个 []int 中间变量存每个值
 func addStrings(num1 string, num2 string) string {
 	len1 := len(num1)
 	len2 := len(num2)
