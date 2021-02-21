@@ -22,7 +22,12 @@ s 和 t 由英文字母组成
 */
 
 /**
-思路：滑动窗口
+思路：滑动窗口 l r
+	将 t 转换为常量 map
+	再用一个 map 与 tMap 做比对
+	若 map < tMap 则 r++
+	若 map == tMap 则 l++
+	并维护一个 minLen，ansL 和 ansR
 */
 func minWindow(s string, t string) string {
 	lenS := len(s)
