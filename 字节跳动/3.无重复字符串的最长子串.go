@@ -29,44 +29,31 @@ import "fmt"
 s由英文字母、数字、符号和空格组成
 */
 
+/**
+思路：双指针滑动窗口
+	i 左指针，j 右指针
+*/
 func lengthOfLongestSubstring(s string) int {
 	le := len(s)
 	if le < 2 {
 		return le
 	}
-	m := make(map[byte]int, le)
-	var result, temp int
+	m := make(map[byte]bool, le)
+	var result int
 	var j int
 
 	// 解法1：滑动窗口妙解
-	//for i := 0; i < le; i++ {
-	//	if i != 0 {
-	//		delete(m, s[i-1])
-	//	}
-	//	for j < le && m[s[j]] == 0 {
-	//		m[s[j]]++
-	//		temp = j - i + 1
-	//		j++
-	//	}
-	//	result = max(result, temp)
-	//}
-
-	// 解法2：从左往右遍历，遇到重复的则 j 指针右移
-	for i := 0; i < le; i++ {
-		if m[s[i]] > 0 {
-			// 指针移动到重复元素的后一个，并且清除 set
-			for s[j] != s[i] {
-				delete(m, s[j])
-				j++
-			}
-			j++
-		} else {
-			m[s[i]]++
+	for i := 0; i < le && j < le; i++ {
+		if i != 0 {
+			// 注意是 i-1 不是 i!!
+			delete(m, s[i-1])
 		}
-		result = max(result, i-j+1)
+		for j < le && !m[s[j]] {
+			m[s[j]] = true
+			j++
+		}
+		result = max(result, j-i)
 	}
-	result = max(result, temp)
-
 	return result
 }
 

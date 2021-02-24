@@ -39,6 +39,11 @@ func (a *array) Swap(i int, j int) {
 	a.Nums[i], a.Nums[j] = a.Nums[j], a.Nums[i]
 }
 
+/**
+思路：双指针法
+	外部 i: 0 -> length 循环
+	内部 l,r 双指针，需要注意的是，可能有重复元素的情况，需要去除
+*/
 func threeSum(nums []int) [][]int {
 	// 排序数组
 	a := &array{Nums: nums}
@@ -48,6 +53,7 @@ func threeSum(nums []int) [][]int {
 	var result [][]int
 	// 三指针法，一个指针从左到右扫描，另两个指针做范围收敛
 	for i := 0; i < le; i++ {
+		// i 和 i-1 有可能相同
 		if i == 0 || nums[i] != nums[i-1] {
 			j := i + 1
 			k := le - 1

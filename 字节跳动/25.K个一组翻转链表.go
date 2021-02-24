@@ -25,60 +25,43 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// 思路：四指针加反转链表
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	if k < 2 {
-		return head
-	}
-	hair := &ListNode{
-		Val:  0,
-		Next: head,
-	}
-	// 四指针，pre -> node -> ... -> tail -> end
-	pre := hair
-	node := head
-	end := head
-	for node != nil {
-		tail := node
-		tempK := k - 1
-		// 切分链表段
-		for tempK > 0 {
+	hair := new(ListNode)
+	hair.Next = head
+
+	pre, cur, tail := hair, hair, hair
+	var end *ListNode
+
+	for cur != nil {
+		cur = pre.Next
+		for count := k; count > 0; count-- {
 			tail = tail.Next
 			if tail == nil {
 				return hair.Next
 			}
-			tempK--
 		}
 		end = tail.Next
-		// 反转链表并拼接
-		curHead, curTail := reverse(node, tail)
-		pre.Next = curHead
-		curTail.Next = end
-		// 窗口滑动
-		pre = curTail // 注意这里的逻辑，此时 分片的链表 已经被反转，pre 应该指向新分片链表的尾部
-		node = end
+		cur, tail = reverse(cur, tail)
+		pre.Next = cur
+		tail.Next = end
+		pre = tail
 	}
 
 	return hair.Next
 }
 
-// 反转链表，返回反转后的链表头尾
 func reverse(head *ListNode, tail *ListNode) (*ListNode, *ListNode) {
-	hair := &ListNode{
-		Val:  0,
-		Next: head,
-	}
-	pre := hair
-	node := head
-	next := node.Next
+	var pre *ListNode
+	cur := head
 	for pre != tail {
-		node.Next = pre
-		pre = node
-		node = next
-		if next != nil {
-			next = next.Next
-		}
+		next := cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = next
 	}
-	return tail, hair.Next
+
+	return tail, head
 }
 
 func main() {

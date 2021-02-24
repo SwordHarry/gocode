@@ -13,13 +13,13 @@ func quickSort(s []int, i, j int) {
 func partition(s []int, i, j int) int {
 	p := s[i]
 	for i < j {
-		for i < j && s[j] > p {
+		for i < j && s[j] >= p {
 			j--
 		}
 		if i < j {
 			s[i] = s[j]
 		}
-		for i < j && s[i] < p {
+		for i < j && s[i] <= p {
 			i++
 		}
 		if i < j {
@@ -32,7 +32,7 @@ func partition(s []int, i, j int) int {
 }
 
 func main() {
-	s := []int{3, 5, 7, 1, 2, 9, 8, 4}
+	s := []int{3, 2, 3, 1, 2, 4, 5, 5, 6}
 	quickSort(s, 0, len(s)-1)
 	fmt.Println(s)
 }
