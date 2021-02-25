@@ -42,18 +42,8 @@ func maxArea(height []int) int {
 
 		if height[i] > height[j] {
 			j--
-		} else if height[i] < height[j] {
-			i++
 		} else {
-			if i+1 < j {
-				if height[i+1] < height[j-1] {
-					j--
-				} else {
-					i++
-				}
-			} else {
-				break
-			}
+			i++
 		}
 	}
 
