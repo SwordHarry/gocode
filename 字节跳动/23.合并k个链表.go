@@ -51,6 +51,7 @@ func mergeKLists(lists []*ListNode) *ListNode {
 	count := 1
 	for count < length {
 		for i := 0; i < length; i += count * 2 {
+			// i + count < length 防越界
 			if i+count < length {
 				lists[i] = merge(lists[i], lists[i+count])
 			}

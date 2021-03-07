@@ -33,7 +33,7 @@ func permute(nums []int) [][]int {
 func backtrack(nums []int, first, n int) {
 	length := len(nums)
 	if first == n {
-		// 需要 copy，切分为引用
+		// 需要 copy，切片 为引用
 		temp := make([]int, length)
 		copy(temp, nums)
 		res = append(res, temp)
