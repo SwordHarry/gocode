@@ -46,6 +46,41 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	return root
 }
 
+// 扩展：前序和中序遍历构建二叉树后，再输出其后序遍历结果
+func buildTreeAndPostTraverse(preorder []int, inorder []int) []int {
+	root := buildTree(preorder, inorder)
+	return postTraverse(root)
+}
+
+func postTraverse(root *TreeNode) []int {
+	var result []int
+	if root == nil {
+		return result
+	}
+
+	var stack []*TreeNode
+	var pre, cur *TreeNode
+	node := root
+	for node != nil || len(stack) > 0 {
+		for node != nil {
+			stack = append(stack, node)
+			node = node.Left
+		}
+
+		last := len(stack) - 1
+		cur = stack[last]
+		right := cur.Right
+		if right == nil || pre == right {
+			result = append(result, cur.Val)
+			stack = stack[:last]
+			pre = cur
+		} else {
+			node = right
+		}
+	}
+	return result
+}
+
 func main() {
 
 }

@@ -20,8 +20,8 @@ package main
  * }
  */
 
-// 思路：模拟，
-func deleteDuplicates(head *ListNode) *ListNode {
+// 思路：模拟，三指针 pre cur next
+func deleteDuplicates2(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
