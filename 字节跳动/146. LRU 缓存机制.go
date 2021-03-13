@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /**
 运用你所掌握的数据结构，设计和实现一个 LRU (最近最少使用) 缓存机制 。
 实现 LRUCache 类：

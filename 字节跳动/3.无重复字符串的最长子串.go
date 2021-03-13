@@ -30,7 +30,7 @@ s由英文字母、数字、符号和空格组成
 */
 
 /**
-思路：双指针滑动窗口
+思路：双指针滑动窗口 + 集合
 	i 左指针，j 右指针
 */
 func lengthOfLongestSubstring(s string) int {

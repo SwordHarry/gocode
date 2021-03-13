@@ -42,7 +42,6 @@ package main
 3. 交换两数，此时[i,n)为降序，再反转为升序，此时该数为大于原数的最小数
 4. 若整个数已经为最大数，直接反转即可
 */
-
 func nextPermutation(nums []int) {
 	length := len(nums)
 	if length < 2 {

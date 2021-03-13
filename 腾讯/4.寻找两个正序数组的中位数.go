@@ -38,6 +38,7 @@ nums2.length == n
 进阶：你能设计一个时间复杂度为 O(log (m+n)) 的算法解决此问题吗？
 */
 
+// 思路：非最佳解法，双指针归并后移，时间复杂度 O(n+m)，空间复杂度 O(1)
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	len1 := len(nums1)
 	len2 := len(nums2)
