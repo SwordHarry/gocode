@@ -32,83 +32,60 @@ type TreeNode struct {
 }
 
 /**
-// 自定义封装的双向队列
-type twoWayQueue struct {
-	q []*TreeNode
-}
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
 
-func (t *twoWayQueue) PositivePop() *TreeNode {
-	r := t.q[0]
-	t.q = t.q[1:]
-	return r
-}
-
-func (t *twoWayQueue) PositivePush(node *TreeNode) {
-	t.q = append(t.q, node)
-}
-
-func (t *twoWayQueue) NegativePop() *TreeNode {
-	lastIndex := len(t.q) - 1
-	r := t.q[lastIndex]
-	t.q = t.q[:lastIndex]
-	return r
-}
-
-func (t *twoWayQueue) NegativePush(node *TreeNode) {
-	t.q = append([]*TreeNode{node}, t.q...)
-}
-
-func (t *twoWayQueue) Len() int {
-	return len(t.q)
-}
+/**
+思路：方法一：本质上是层次遍历，遇到奇数层将结果反转即可
+	方法二：也可以使用双向队列，但这样编码相对更复杂，容易出错，建议用方法一
 */
-
-// go 有内置队列 container/list，也可以自己封装一个 双向队列
 func zigzagLevelOrder(root *TreeNode) [][]int {
-	queue := list.New()
-	var result [][]int
 	if root == nil {
-		return result
+		return nil
 	}
+	var (
+		result [][]int
+		que    []*TreeNode
+		count  int
+	)
+
 	node := root
-	queue.PushBack(node)
-	flag := true
-	for queue.Len() > 0 {
-		le := queue.Len()
+	que = append(que, root)
+
+	for len(que) > 0 {
+		length := len(que)
 		var temp []int
-		for i := 0; i < le; i++ {
-			if flag {
-				// left pop
-				e := queue.Front()
-				node = e.Value.(*TreeNode)
-				queue.Remove(e)
-				if node.Left != nil {
-					queue.PushBack(node.Left)
-				}
-				if node.Right != nil {
-					queue.PushBack(node.Right)
-				}
-			} else {
-				// right pop
-				e := queue.Back()
-				node = e.Value.(*TreeNode)
-				queue.Remove(e)
-				if node.Right != nil {
-					queue.PushFront(node.Right)
-				}
-				if node.Left != nil {
-					queue.PushFront(node.Left)
-				}
+		for i := 0; i < length; i++ {
+			node = que[0]
+			que = que[1:]
+			if node.Left != nil {
+				que = append(que, node.Left)
+			}
+			if node.Right != nil {
+				que = append(que, node.Right)
 			}
 			temp = append(temp, node.Val)
-		}
-		if len(temp) > 0 {
-			result = append(result, temp)
-		}
-		flag = !flag
-	}
 
+		}
+		if count%2 == 1 {
+			reverse(temp)
+		}
+		count++
+		result = append(result, temp)
+	}
 	return result
+}
+
+func reverse(nums []int) {
+	length := len(nums)
+	for i := 0; i < length/2; i++ {
+		nums[i], nums[length-1-i] = nums[length-1-i], nums[i]
+	}
 }
 
 func main() {
