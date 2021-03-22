@@ -60,6 +60,37 @@ func max(a, b int) int {
 	return b
 }
 
+/**
+最优解：贪心+二分
+	维护一个数组 d[i] ，表示长度为 i 的最长上升子序列的末尾元素的最小值，
+	用 len 记录目前最长上升子序列的长度，起始时 len 为 1，d[1]=nums[0]。
+*/
+func lengthOfLIS(nums []int) int {
+	length := len(nums)
+	var d []int
+	d = append(d, nums[0])
+
+	for i := 1; i < length; i++ {
+		l, r := 0, len(d)-1
+		if d[r] < nums[i] {
+			d = append(d, nums[i])
+		} else {
+			// 这里用二分查找，找出第一个 >= 当前数的下标
+			for l < r {
+				mid := l + (r-l)/2
+				// 严格递增，不等于
+				if d[mid] < nums[i] {
+					l = mid + 1
+				} else {
+					r = mid
+				}
+			}
+			d[l] = nums[i]
+		}
+	}
+	return len(d)
+}
+
 func main() {
 
 }

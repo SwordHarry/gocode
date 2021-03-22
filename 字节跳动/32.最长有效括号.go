@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"strconv"
+)
+
 /**
 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
 
@@ -54,7 +59,7 @@ func longestValidParentheses(s string) int {
 				}
 				dp[i] = temp + 2
 			} else if s[i-1] == ')' {
-				// dp[i] = dp[i-1] + dp[i-dp[i-1]-2] + 2
+				// 形如 ()(()) 这种形式， dp[i] = dp[i-1] + dp[i-dp[i-1]-2] + 2
 				left := i - dp[i-1] - 1
 				if left >= 0 && s[left] == '(' {
 					if left >= 1 {

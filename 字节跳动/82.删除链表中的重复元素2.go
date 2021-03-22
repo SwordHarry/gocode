@@ -21,19 +21,21 @@ package main
  */
 
 // 思路：模拟，三指针 pre cur next
-func deleteDuplicates2(head *ListNode) *ListNode {
+func deleteDuplicates(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
 
-	hair := new(ListNode)
-	hair.Next = head
+	result := &ListNode{
+		Next: head,
+	}
 
-	pre, cur := hair, head
+	pre, cur := result, head
 
-	for cur != nil && cur.Next != nil {
+	// 分情况讨论：若 遇到重复节点 和 没遇到重复节点
+	for cur != nil {
 		next := cur.Next
-		if next.Val == cur.Val {
+		if next != nil && next.Val == cur.Val {
 			for next != nil && cur.Val == next.Val {
 				cur = cur.Next
 				next = next.Next
@@ -45,7 +47,7 @@ func deleteDuplicates2(head *ListNode) *ListNode {
 		cur = cur.Next
 	}
 
-	return hair.Next
+	return result.Next
 }
 
 func main() {

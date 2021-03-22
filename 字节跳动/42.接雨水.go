@@ -17,31 +17,27 @@ n == height.length
 0 <= height[i] <= 105
 */
 
-// 思路1：暴力，O(n^2) 80ms 2.9MB
-// 按列求，一列能存储的水量，为其左右两端最高墙的较小值即，min(max(left), max(right))
+// 最优解：左右指针夹逼原理
 func trap(height []int) int {
 	length := len(height)
+	left, leftMax, right, rightMax := 0, 0, length-1, 0
+	// 双指针
 	var result int
-	if length < 3 {
-		return result
-	}
-
-	for i := 1; i < length-1; i++ {
-		var leftMax, rightMax int
-		for left := i - 1; left >= 0; left-- {
-			if leftMax < height[left] {
+	for left < right {
+		if height[left] < height[right] {
+			if height[left] > leftMax {
 				leftMax = height[left]
+			} else {
+				result += leftMax - height[left]
 			}
-		}
-		for right := i + 1; right < length; right++ {
-			if rightMax < height[right] {
+			left++
+		} else {
+			if height[right] > rightMax {
 				rightMax = height[right]
+			} else {
+				result += rightMax - height[right]
 			}
-		}
-
-		minWall := min(leftMax, rightMax)
-		if height[i] < minWall {
-			result += minWall - height[i]
+			right--
 		}
 	}
 	return result
